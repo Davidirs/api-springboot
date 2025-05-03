@@ -18,9 +18,4 @@ public class HelloController {
     public String helloGet(@RequestParam(required = false) String name) {
         return "¡Hola " + (name != null ? name : "Mundo") + "!";
     }
-
-    @GetMapping("/hello/{name}")
-    public String helloGet(@PathVariable String name) {
-        return "¡Hola " + name + "!";
-    }
 } 
