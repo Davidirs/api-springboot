@@ -1,7 +1,7 @@
 
 FROM eclipse-temurin:17-jdk-alpine
 # Instalar Maven
-RUN apt-get update && apt-get install -y maven
+RUN apk update && apk add maven
 VOLUME /tmp
 # Ejecutar comando mvn package
 RUN mvn package
