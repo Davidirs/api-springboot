@@ -1,19 +1,20 @@
-FROM maven:3.8.6 AS build
-ENV JAVA_HOME=/usr/lib/jvm/java-17
-ENV MAVEN_HOME=/usr/share/maven
+# Usar una imagen base con JDK 11 y Maven
+FROM maven:3.8.4-openjdk-11 AS build
 
-# Instalar Java 17
-RUN apt-get update && apt-get install -y openjdk-17-jdk
-
-# Copiar código fuente
-COPY src /app/src
-COPY pom.xml /app/pom.xml
-
-# Compilar proyecto
+# Establecer un directorio de trabajo
 WORKDIR /app
 
-# Crear imagen de Java
-FROM eclipse-temurin:17-jdk-alpine
+# Copiar archivos de tu proyecto al directorio de trabajo
+COPY . /app
+
+# Ejecutar Maven para construir el proyecto
+RUN mvn clean package
+
+# Crear una nueva imagen basada en OpenJDK 11
+FROM openjdk:11-jre-slim-buster
+
+# Exponer el puerto que utilizará la aplicación
+EXPOSE 8080
 
 # Copiar archivo JAR compilado
 COPY --from=build /app/target/api-asistencia-0.0.1-SNAPSHOT.jar /app.jar
