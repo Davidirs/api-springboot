@@ -1,4 +1,4 @@
-FROM maven:3.6.0-jdk-11 AS build
+FROM maven:3.12.0-jdk-11 AS build
 
 # Copiar código fuente
 COPY src /app/src
