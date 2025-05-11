@@ -11,7 +11,6 @@ COPY pom.xml /app/pom.xml
 
 # Compilar proyecto
 WORKDIR /app
-RUN mvn package
 
 # Crear imagen de Java
 FROM eclipse-temurin:17-jdk-alpine
