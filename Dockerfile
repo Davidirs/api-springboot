@@ -1,4 +1,4 @@
-FROM Ubuntu:latest as build
+FROM ubuntu:latest as build
 # Instalar dependencias necesarias
 run apt-get update && apt-get install -y maven
 # Copiar el archivo pom.xml y el directorio src
