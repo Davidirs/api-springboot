@@ -7,15 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+public class InfoController {
 
-    @PostMapping("/hello")
-    public String hello(@RequestBody(required = false) String name) {
-        return "¡Hola " + (name != null ? name : "Mundo") + "!";
+    @GetMapping("/status")
+    public String status() {
+        return "Servicio funcionando correctamente";
     }
-
-    @GetMapping("/hello")
-    public String helloGet(@RequestParam(required = false) String name) {
-        return "¡Hola " + (name != null ? name : "Mundo") + "!";
-    }
-} 
+}
