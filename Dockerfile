@@ -4,6 +4,7 @@ run apt-get update && apt-get install -y maven
 # Copiar el archivo pom.xml y el directorio src
 COPY . .
 # Compilar la aplicación
+RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 # Crear una nueva imagen basada en OpenJDK 17
 FROM openjdk:17-jdk-slim
