@@ -1,6 +1,10 @@
-FROM maven:3.8.6-jdk-17 AS build
+FROM maven:3.8.6 AS build
 ENV JAVA_HOME=/usr/lib/jvm/java-17
 ENV MAVEN_HOME=/usr/share/maven
+
+# Instalar Java 17
+RUN apt-get update && apt-get install -y openjdk-17-jdk
+
 # Copiar código fuente
 COPY src /app/src
 COPY pom.xml /app/pom.xml
