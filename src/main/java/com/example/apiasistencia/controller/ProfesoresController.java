@@ -12,23 +12,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.apiasistencia.resources.FirestoreCRUD;
+
 @RestController
 public class ProfesoresController {
+    // importandola clase creadapor arocha
+    FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
 
     @GetMapping("/profesores")
     public List<Map<String, Object>> profesoresGet() {
-        List<Map<String, Object>> profesores = new ArrayList<>();
-        profesores.add(new HashMap<String, Object>() {
-            {
-                put("cedula", "24114415");
-                put("nombre", "Gabriel Vielma");
-                put("telefono", "04145021471");
-                put("correo", "gabrielvielma91@gmail.com");
-                put("imagen",
-                        "https://lh3.googleusercontent.com/cm/AGPWSu9E4K66u1GRzKXEbgoqerRKCGDtMzMaNt50-8szNfgiZhmDJwptPK_Ta8_Om1jva7HOBw=s48-p");
-            }
-        });
-        return profesores;
+
+        List<Map<String, Object>> profesoresEncontrados = FirestoreCRUD.leerUnProfesor();
+
+        return profesoresEncontrados;
+    }
+
+    @GetMapping("/prueba")
+    public String prueba() {
+        // creo una variable para devolver la nombrecompleto
+        // porque al ejecutar la funcion leer un estudiante me devuelve un string
+        String nombrecompletoDevuelta = FirestoreCRUD.leerUnEstudiante();
+        return nombrecompletoDevuelta;
     }
 }
-

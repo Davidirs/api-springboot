@@ -1,0 +1,214 @@
+package com.example.apiasistencia.resources;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.google.api.core.ApiFuture;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.*;
+/* import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions; */
+/* 
+import java.util.concurrent.ExecutionException; */
+
+public class FirestoreCRUD {
+    private final Firestore db;
+
+    public FirestoreCRUD() {
+        // Cargar el archivo de credenciales
+        try {
+            // Ruta del archivo de configuración
+            String path = "serviceAccountKey.json";
+            // Cargar las credenciales desde el archivo
+            GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(path));
+            // Opción 1: Usar InputStream directamente
+            FirestoreOptions options = FirestoreOptions.getDefaultInstance().toBuilder()
+                    .setCredentials(credentials)
+                    .build();
+            // Opción 2: Usar la ruta del archivo de credenciales
+            this.db = options.getService();
+
+            System.out.println("Conexión a Firestore establecida");
+        } catch (Exception e) {
+            System.err.println("Error al conectar con Firestore: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    // creamos una funcion para crear un nuevo estudiante en Firestore
+    public static void crearEstudiante() {
+        try {
+
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+
+            // Crear una referencia al documento
+            DocumentReference docRef = firestoreCRUD.db
+                    .collection("estudiantes")
+                    .document("30740994");
+
+            // Crear un mapa con los datos del estudiante
+            Map<String, Object> estudiante = new HashMap<>();
+
+            // Agregar los datos del estudiante
+            estudiante.put("apellido", "guevara");
+            estudiante.put("nombre", "anthony");
+            estudiante.put("edad", "20");
+            // Guardar el documento en Firestore
+            ApiFuture<WriteResult> result = docRef.set(estudiante);
+
+            System.out.println("Documento guardado con ID: " + result.get().getUpdateTime());
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println("Error al guardar el documento: " + e.getMessage());
+        }
+    }
+
+    public static void leerEstudiantes() {
+
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            ApiFuture<QuerySnapshot> busqueda = firestoreCRUD.db.collection("estudiantes").get();
+            QuerySnapshot querySnapshot = busqueda.get();
+            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                System.out.println("Cedula: " + document.getId());
+                System.out.println("nombre: " + document.getString("nombre"));
+                System.out.println("apellido: " + document.getString("apellido"));
+                System.out.println("edad: " + document.getString("edad"));
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println("Error al obtener los estudiantes: " + e.getMessage());
+        }
+    }
+
+    public static void EliminarEstudiante() {
+
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            ApiFuture<WriteResult> result = firestoreCRUD.db.collection("estudiantes")
+                    .document("24114415").delete();
+            System.out.println("Documento eliminado con ID: " + result.get().getUpdateTime());
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println("Error al eliminar el documento: " + e.getMessage());
+        }
+    }
+
+    public static void actualizarEstudiante() {
+        try {
+
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+
+            // Crear una referencia al documento
+            DocumentReference docRef = firestoreCRUD.db
+                    .collection("estudiantes")
+                    .document("24114415");
+
+            // Crear un mapa con los datos del estudiante
+            Map<String, Object> estudiante = new HashMap<>();
+
+            // Agregar los datos del estudiante
+            estudiante.put("apellido", "AROCHA");
+            estudiante.put("nombre", "RAFAEL");
+            estudiante.put("edad", "22");
+            // Guardar el documento en Firestore
+            ApiFuture<WriteResult> result = docRef.set(estudiante);
+
+            System.out.println("Documento guardado con ID: " + result.get().getUpdateTime());
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println("Error al guardar el documento: " + e.getMessage());
+        }
+    }
+
+    public static String leerUnEstudiante() {
+        // creo un string para guardar la nombre y apellido
+        String nombrecompleto = "";
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            ApiFuture<DocumentSnapshot> busqueda = firestoreCRUD.db.collection("estudiantes").document("30740994")
+                    .get();
+            DocumentSnapshot documentSnapshot = busqueda.get();
+            System.out.println("Cedula: " + documentSnapshot.getId());
+            // lleno la nombrecompleto con la nombre y apellido del estudiante
+            nombrecompleto = documentSnapshot.getString("nombre") + " " + documentSnapshot.getString("apellido");
+            System.out.println("nombre: " + documentSnapshot.getString("nombre"));
+            System.out.println("apellido: " + documentSnapshot.getString("apellido"));
+            System.out.println("edad: " + documentSnapshot.getString("edad"));
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println("Error al obtener los estudiantes: " + e.getMessage());
+        }
+        // devuelvo la nombrecompleto para poder usarla en el controlador
+        return nombrecompleto;
+    }
+
+    public static  List<Map<String, Object>> leerUnProfesor() {
+        List<Map<String, Object>> profesores = new ArrayList<>();
+
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            ApiFuture<DocumentSnapshot> busqueda = firestoreCRUD.db.collection("profesores")
+                    .document("wh29q5zFD6MgWYJcCs0E")
+                    .get();
+            DocumentSnapshot documentSnapshot = busqueda.get();
+            System.out.println("id: " + documentSnapshot.getId());
+            System.out.println("nombre: " + documentSnapshot.getString("nombre"));
+            System.out.println("correo: " + documentSnapshot.getString("correo"));
+            System.out.println("imagen: " + documentSnapshot.getString("imagen"));
+            System.out.println("telefono: " + documentSnapshot.getString("telefono"));
+
+            profesores.add(new HashMap<String, Object>() {
+                {
+                    put("id", documentSnapshot.getId());
+                    put("nombre", documentSnapshot.getString("nombre"));
+                    put("telefono", documentSnapshot.getString("telefono"));
+                    put("correo", documentSnapshot.getString("correo"));
+                    put("imagen",documentSnapshot.getString("telefono"));
+                }
+            });
+            profesores.add(new HashMap<String, Object>() {
+                {
+                    put("id", documentSnapshot.getId());
+                    put("nombre", documentSnapshot.getString("nombre"));
+                    put("telefono", documentSnapshot.getString("telefono"));
+                    put("correo", documentSnapshot.getString("correo"));
+                    put("imagen",documentSnapshot.getString("telefono"));
+                }
+            });
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println("Error al obtener los estudiantes: " + e.getMessage());
+        }
+        return profesores;
+    }
+
+    /*
+     * public static void main(String[] args) {
+     * 
+     * //crearEstudiante();
+     * // leerEstudiantes();
+     * //leerUnEstudiante();
+     * //actualizarEstudiante();
+     * EliminarEstudiante();
+     * }
+     */
+}
+
+/*
+ * C = Create - Crear
+ * R = Read - Leer (leer todos, leer solo uno)
+ * U = Update - Actualizar
+ * D = Delete - Eliminar
+ */
+
+// leer un solo estudiante
+// borrar un estudiante
+// actualizar un estudiante
