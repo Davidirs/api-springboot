@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,9 +23,19 @@ public class ProfesoresController {
     @GetMapping("/profesores")
     public List<Map<String, Object>> profesoresGet() {
 
-        List<Map<String, Object>> profesoresEncontrados = FirestoreCRUD.leerUnProfesor();
+        List<Map<String, Object>> profesoresEncontrados = FirestoreCRUD.leerProfesores();
 
         return profesoresEncontrados;
+    }
+    @PostMapping("/profesor")
+    public ResponseEntity<?> buscarProfesor(@RequestBody  String idProfesor ) {
+        
+
+        Map<String, Object> profesorEncontrado = FirestoreCRUD.leerUnProfesor(idProfesor);
+        if (profesorEncontrado == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(profesorEncontrado);
     }
 
     @GetMapping("/prueba")
@@ -34,4 +45,9 @@ public class ProfesoresController {
         String nombrecompletoDevuelta = FirestoreCRUD.leerUnEstudiante();
         return nombrecompletoDevuelta;
     }
+
+
+
+
+    
 }

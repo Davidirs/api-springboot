@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.lang.NonNull;
+import org.springframework.scheduling.config.Task;
+
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
@@ -149,45 +153,47 @@ public class FirestoreCRUD {
         return nombrecompleto;
     }
 
-    public static  List<Map<String, Object>> leerUnProfesor() {
+    public static List<Map<String, Object>> leerProfesores() {
         List<Map<String, Object>> profesores = new ArrayList<>();
 
         try {
             FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-            ApiFuture<DocumentSnapshot> busqueda = firestoreCRUD.db.collection("profesores")
-                    .document("wh29q5zFD6MgWYJcCs0E")
-                    .get();
-            DocumentSnapshot documentSnapshot = busqueda.get();
-            System.out.println("id: " + documentSnapshot.getId());
-            System.out.println("nombre: " + documentSnapshot.getString("nombre"));
-            System.out.println("correo: " + documentSnapshot.getString("correo"));
-            System.out.println("imagen: " + documentSnapshot.getString("imagen"));
-            System.out.println("telefono: " + documentSnapshot.getString("telefono"));
+            CollectionReference colRef = firestoreCRUD.db.collection("profesores");
 
-            profesores.add(new HashMap<String, Object>() {
-                {
-                    put("id", documentSnapshot.getId());
-                    put("nombre", documentSnapshot.getString("nombre"));
-                    put("telefono", documentSnapshot.getString("telefono"));
-                    put("correo", documentSnapshot.getString("correo"));
-                    put("imagen",documentSnapshot.getString("telefono"));
-                }
-            });
-            profesores.add(new HashMap<String, Object>() {
-                {
-                    put("id", documentSnapshot.getId());
-                    put("nombre", documentSnapshot.getString("nombre"));
-                    put("telefono", documentSnapshot.getString("telefono"));
-                    put("correo", documentSnapshot.getString("correo"));
-                    put("imagen",documentSnapshot.getString("telefono"));
-                }
-            });
-
+            ApiFuture<QuerySnapshot> future = colRef.get();
+            QuerySnapshot querySnapshot = future.get();
+            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                Map<String, Object> profesor = new HashMap<>();
+                profesor.put("id", documentSnapshot.getId());
+                profesor.put("nombre", documentSnapshot.getString("nombre"));
+                profesor.put("telefono", documentSnapshot.getString("telefono"));
+                profesor.put("correo", documentSnapshot.getString("correo"));
+                profesor.put("imagen", documentSnapshot.getString("imagen"));
+                profesores.add(profesor);
+            }
         } catch (Exception e) {
-            // TODO: handle exception
-            System.err.println("Error al obtener los estudiantes: " + e.getMessage());
+            System.err.println("Error al obtener los profesores: " + e.getMessage());
         }
         return profesores;
+    }
+
+    public static Map<String, Object> leerUnProfesor(String idProfesor) {
+
+        Map<String, Object> profesor = new HashMap<>();
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            DocumentReference docRef = firestoreCRUD.db.collection("profesores").document(idProfesor);
+            DocumentSnapshot documentSnapshot = docRef.get().get();
+            profesor.put("id", documentSnapshot.getId());
+            profesor.put("nombre", documentSnapshot.getString("nombre"));
+            profesor.put("telefono", documentSnapshot.getString("telefono"));
+            profesor.put("correo", documentSnapshot.getString("correo"));
+            profesor.put("imagen", documentSnapshot.getString("imagen"));
+
+        } catch (Exception e) {
+            System.err.println("Error al obtener el profesor: " + e.getMessage());
+        }
+        return profesor;
     }
 
     /*
