@@ -2,7 +2,6 @@ com\example\apiasistencia\controller\EstudiantesController$5.class
 com\example\apiasistencia\controller\AsistenciasController$ErrorResponse.class
 com\example\apiasistencia\controller\ProfesoresController.class
 com\example\apiasistencia\controller\EstudiantesController.class
-com\example\apiasistencia\controller\ProfesoresController$1.class
 com\example\apiasistencia\controller\AuthController$1.class
 com\example\apiasistencia\controller\EstudiantesController$3.class
 com\example\apiasistencia\controller\EstudiantesController$4.class
@@ -17,5 +16,6 @@ com\example\apiasistencia\controller\SubproyectosController$1.class
 com\example\apiasistencia\controller\AsistenciasController$Asistencia.class
 com\example\apiasistencia\controller\InfoController.class
 com\example\apiasistencia\controller\SubproyectosController.class
+com\example\apiasistencia\resources\FirestoreCRUD.class
 com\example\apiasistencia\controller\EstudiantesController$1.class
 com\example\apiasistencia\controller\AuthController$Credenciales.class

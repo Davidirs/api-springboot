@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.apiasistencia.resources.FirestoreCRUD;
+
 @RestController
 public class AsistenciasController {
     public static class Asistencia {
+        private String id;
         private String fecha;
-        private List<String> asistencias;
+        private List<String> estudiantes;
         private String subproyecto;
         private String profesor;
 
@@ -26,14 +29,22 @@ public class AsistenciasController {
         public Asistencia() {
         }
 
-        public Asistencia(String fecha, List<String> asistencias, String subproyecto, String profesor) {
+        public Asistencia(String id,String fecha, List<String> estudiantes, String subproyecto, String profesor) {
+            this.id = id;
             this.fecha = fecha;
-            this.asistencias = asistencias;
+            this.estudiantes = estudiantes;
             this.subproyecto = subproyecto;
             this.profesor = profesor;
         }
 
         // Getters y Setters
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
         public String getFecha() {
             return fecha;
         }
@@ -42,12 +53,12 @@ public class AsistenciasController {
             this.fecha = fecha;
         }
 
-        public List<String> getAsistencias() {
-            return asistencias;
+        public List<String> getEstudiantes() {
+            return estudiantes;
         }
 
-        public void setAsistencias(List<String> asistencias) {
-            this.asistencias = asistencias;
+        public void setEstudiantes(List<String> estudiantes) {
+            this.estudiantes = estudiantes;
         }
 
         public String getSubproyecto() {
@@ -70,9 +81,7 @@ public class AsistenciasController {
     @PostMapping("/agregarasistencia")
     public ResponseEntity<?> agregarAsistencia(@RequestBody Asistencia asistencia) {
         try {
-            // Simplemente devolvemos la asistencia recibida como prueba
-            // En una aplicación real, aquí guardarías en base de datos
-            Asistencia asistenciaGuardada = guardarAsistencia(asistencia);
+            Asistencia asistenciaGuardada = FirestoreCRUD.crearAsistencia(asistencia);
             return ResponseEntity.ok(asistenciaGuardada);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Error al procesar la solicitud: " + e.getMessage());
@@ -81,34 +90,16 @@ public class AsistenciasController {
 
     @GetMapping("/asistencias")
     public List<Map<String, Object>> asistenciasGet() {
-        List<Map<String, Object>> asistencias = new ArrayList<>();
-
-        asistencias.add(new HashMap<String, Object>() {
-            {
-                put("fecha", "02/05/2025");
-                put("asistencias", Arrays.asList("24114415", "30321239", "31204836", "30740994", "31598995"));
-                put("subproyecto", "subproyectoID");
-                put("profesor", "profesorID");
-            }
-        });
-
-        asistencias.add(new HashMap<String, Object>() {
-            {
-                put("fecha", "26/04/2025");
-                put("asistencias", Arrays.asList("24114415", "30321239", "31204836", "30740994"));
-                put("subproyecto", "subproyectoID");
-                put("profesor", "profesorID");
-            }
-        });
+        List<Map<String, Object>> asistencias = FirestoreCRUD.leerAsistencias();
 
         return asistencias;
     }
 
-    private Asistencia guardarAsistencia(Asistencia asistencia) {
-        // Aquí debes implementar la lógica para guardar la asistencia en la base de
-        // datos
-        // o realizar cualquier otra acción necesaria
-        return asistencia;
+    @PostMapping("/asistenciasprofesor")
+    public List<Map<String, Object>> asistenciasProfesor(@RequestBody String idProfesor) {
+        List<Map<String, Object>> asistencias = FirestoreCRUD.leerAsistenciasUnProfesor(idProfesor);
+
+        return asistencias;
     }
 
     public class ErrorResponse {

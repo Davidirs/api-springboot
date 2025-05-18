@@ -3,5 +3,6 @@ D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\co
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\controller\AsistenciasController.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\controller\AuthController.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\controller\SubproyectosController.java
+D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\resources\FirestoreCRUD.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\ApiAsistenciaApplication.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\controller\InfoController.java
