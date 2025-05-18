@@ -101,6 +101,13 @@ public class AsistenciasController {
 
         return asistencias;
     }
+    
+    @PostMapping("/asistenciassubproyecto")
+    public List<Map<String, Object>> asistenciasSubproyecto(@RequestBody String idSubproyecto) {
+        List<Map<String, Object>> asistencias = FirestoreCRUD.leerAsistenciasUnSubproyecto(idSubproyecto);
+
+        return asistencias;
+    }
 
     public class ErrorResponse {
         private String mensaje;

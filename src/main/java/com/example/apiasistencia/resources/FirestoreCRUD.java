@@ -212,7 +212,7 @@ public class FirestoreCRUD {
                 Map<String, Object> asistencia = new HashMap<>();
                 asistencia.put("id", documentSnapshot.getId());
                 asistencia.put("fecha", documentSnapshot.getString("fecha"));
-                asistencia.put("asistencias", documentSnapshot.getString("asistencias"));
+                asistencia.put("estudiantes", (List<String>) documentSnapshot.get("estudiantes"));
                 asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
                 asistencia.put("profesor", documentSnapshot.getString("profesor"));
                 asistencias.add(asistencia);
@@ -231,8 +231,8 @@ public class FirestoreCRUD {
         CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
 
         // Consulta con filtro y ordenamiento
-        Query query = colRef.whereEqualTo("profesor", profesor)
-                          .orderBy("fecha", Direction.DESCENDING);
+        Query query = colRef.whereEqualTo("profesor", profesor);
+                          //.orderBy("fecha", Direction.DESCENDING);
 
         ApiFuture<QuerySnapshot> future = query.get();
         QuerySnapshot querySnapshot = future.get();
@@ -240,7 +240,34 @@ public class FirestoreCRUD {
                 Map<String, Object> asistencia = new HashMap<>();
                 asistencia.put("id", documentSnapshot.getId());
                 asistencia.put("fecha", documentSnapshot.getString("fecha"));
-                asistencia.put("asistencias", documentSnapshot.getString("asistencias"));
+                asistencia.put("estudiantes", (List<String>) documentSnapshot.get("estudiantes"));
+                asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
+                asistencia.put("profesor", documentSnapshot.getString("profesor"));
+                asistencias.add(asistencia);
+            }   
+    } catch (Exception e) {
+        System.err.println("Error al obtener asistencias ordenadas: " + e.getMessage());
+    }
+    return asistencias;
+}
+public static List<Map<String, Object>> leerAsistenciasUnSubproyecto(String subproyecto) {
+    List<Map<String, Object>> asistencias = new ArrayList<>();
+
+    try {
+        FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+        CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
+
+        // Consulta con filtro y ordenamiento
+        Query query = colRef.whereEqualTo("subproyecto", subproyecto);
+                          //.orderBy("fecha", Direction.DESCENDING);
+
+        ApiFuture<QuerySnapshot> future = query.get();
+        QuerySnapshot querySnapshot = future.get();
+            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                Map<String, Object> asistencia = new HashMap<>();
+                asistencia.put("id", documentSnapshot.getId());
+                asistencia.put("fecha", documentSnapshot.getString("fecha"));
+                asistencia.put("estudiantes", (List<String>) documentSnapshot.get("estudiantes"));
                 asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
                 asistencia.put("profesor", documentSnapshot.getString("profesor"));
                 asistencias.add(asistencia);
@@ -258,7 +285,7 @@ public static Asistencia crearAsistencia(Asistencia asistencia) {
 
             // Crear una referencia al documento
             DocumentReference docRef = firestoreCRUD.db
-                    .collection("estudiantes")
+                    .collection("asistencias")
                     .document(asistencia.getId());
 
             // Crear un mapa con los datos del estudiante
@@ -280,6 +307,54 @@ public static Asistencia crearAsistencia(Asistencia asistencia) {
         }
         return asistencia;
     }
+     public static List<Map<String, Object>> leerSubproyectos() {
+        List<Map<String, Object>> subproyectos = new ArrayList<>();
+
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            CollectionReference colRef = firestoreCRUD.db.collection("subproyectos");
+
+            ApiFuture<QuerySnapshot> future = colRef.get();
+            QuerySnapshot querySnapshot = future.get();
+            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                Map<String, Object> subproyecto = new HashMap<>();
+                subproyecto.put("id", documentSnapshot.getId());
+                subproyecto.put("nombre",  documentSnapshot.getString("nombre"));
+                subproyecto.put("profesor", documentSnapshot.getString("profesor"));
+                subproyectos.add(subproyecto);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al obtener las subproyectos: " + e.getMessage());
+        }
+        return subproyectos;
+    }
+     public static List<Map<String, Object>> leerSubproyectosUnProfesor(String profesor) {
+    List<Map<String, Object>> subproyectos = new ArrayList<>();
+
+    try {
+        FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+        CollectionReference colRef = firestoreCRUD.db.collection("subproyectos");
+
+        // Consulta con filtro y ordenamiento
+        Query query = colRef.whereEqualTo("profesor", profesor);
+                          //.orderBy("fecha", Direction.DESCENDING);
+
+        ApiFuture<QuerySnapshot> future = query.get();
+        QuerySnapshot querySnapshot = future.get();
+            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                
+                Map<String, Object>subproyecto  = new HashMap<>();
+                subproyecto.put("id", documentSnapshot.getId());
+                subproyecto.put("nombre", documentSnapshot.getString("nombre"));
+                subproyecto.put("profesor", documentSnapshot.getString("profesor"));
+
+                subproyectos.add(subproyecto);
+            }   
+    } catch (Exception e) {
+        System.err.println("Error al obtener subproyectos. ordenadas: " + e.getMessage());
+    }
+    return subproyectos;
+}
 
 
     /*
