@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.apiasistencia.models.Profesor;
-import com.example.apiasistencia.resources.FirestoreCRUD;
 import com.example.apiasistencia.services.ProfesorService;
 
 @RestController
 public class ProfesoresController {
-    // importandola clase creadapor arocha
-    FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
 
     @GetMapping("/profesores")
     public List<Map<String, Object>> profesoresGet() {
