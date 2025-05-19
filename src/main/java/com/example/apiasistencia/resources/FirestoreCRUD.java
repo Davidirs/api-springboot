@@ -1,28 +1,16 @@
 package com.example.apiasistencia.resources;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.lang.NonNull;
-import org.springframework.scheduling.config.Task;
-
-import com.example.apiasistencia.controller.AsistenciasController.Asistencia;
+import com.example.apiasistencia.models.Asistencia;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
-/* import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions; */
-/* 
-import java.util.concurrent.ExecutionException; */
-import com.google.cloud.firestore.Query.Direction;
 
 public class FirestoreCRUD {
-    private final Firestore db;
+    public final Firestore db;
 
     public FirestoreCRUD() {
         // Cargar el archivo de credenciales
@@ -155,49 +143,6 @@ public class FirestoreCRUD {
         return nombrecompleto;
     }
 
-    public static List<Map<String, Object>> leerProfesores() {
-        List<Map<String, Object>> profesores = new ArrayList<>();
-
-        try {
-            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-            CollectionReference colRef = firestoreCRUD.db.collection("profesores");
-
-            ApiFuture<QuerySnapshot> future = colRef.get();
-            QuerySnapshot querySnapshot = future.get();
-            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                Map<String, Object> profesor = new HashMap<>();
-                profesor.put("id", documentSnapshot.getId());
-                profesor.put("nombre", documentSnapshot.getString("nombre"));
-                profesor.put("telefono", documentSnapshot.getString("telefono"));
-                profesor.put("correo", documentSnapshot.getString("correo"));
-                profesor.put("imagen", documentSnapshot.getString("imagen"));
-                profesores.add(profesor);
-            }
-        } catch (Exception e) {
-            System.err.println("Error al obtener los profesores: " + e.getMessage());
-        }
-        return profesores;
-    }
-
-    public static Map<String, Object> leerUnProfesor(String idProfesor) {
-
-        Map<String, Object> profesor = new HashMap<>();
-        try {
-            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-            DocumentReference docRef = firestoreCRUD.db.collection("profesores").document(idProfesor);
-            DocumentSnapshot documentSnapshot = docRef.get().get();
-            profesor.put("id", documentSnapshot.getId());
-            profesor.put("nombre", documentSnapshot.getString("nombre"));
-            profesor.put("telefono", documentSnapshot.getString("telefono"));
-            profesor.put("correo", documentSnapshot.getString("correo"));
-            profesor.put("imagen", documentSnapshot.getString("imagen"));
-
-        } catch (Exception e) {
-            System.err.println("Error al obtener el profesor: " + e.getMessage());
-        }
-        return profesor;
-    }
-
 
     public static List<Map<String, Object>> leerAsistencias() {
         List<Map<String, Object>> asistencias = new ArrayList<>();
@@ -307,55 +252,7 @@ public static Asistencia crearAsistencia(Asistencia asistencia) {
         }
         return asistencia;
     }
-     public static List<Map<String, Object>> leerSubproyectos() {
-        List<Map<String, Object>> subproyectos = new ArrayList<>();
-
-        try {
-            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-            CollectionReference colRef = firestoreCRUD.db.collection("subproyectos");
-
-            ApiFuture<QuerySnapshot> future = colRef.get();
-            QuerySnapshot querySnapshot = future.get();
-            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                Map<String, Object> subproyecto = new HashMap<>();
-                subproyecto.put("id", documentSnapshot.getId());
-                subproyecto.put("nombre",  documentSnapshot.getString("nombre"));
-                subproyecto.put("profesor", documentSnapshot.getString("profesor"));
-                subproyectos.add(subproyecto);
-            }
-        } catch (Exception e) {
-            System.err.println("Error al obtener las subproyectos: " + e.getMessage());
-        }
-        return subproyectos;
-    }
-     public static List<Map<String, Object>> leerSubproyectosUnProfesor(String profesor) {
-    List<Map<String, Object>> subproyectos = new ArrayList<>();
-
-    try {
-        FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-        CollectionReference colRef = firestoreCRUD.db.collection("subproyectos");
-
-        // Consulta con filtro y ordenamiento
-        Query query = colRef.whereEqualTo("profesor", profesor);
-                          //.orderBy("fecha", Direction.DESCENDING);
-
-        ApiFuture<QuerySnapshot> future = query.get();
-        QuerySnapshot querySnapshot = future.get();
-            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                
-                Map<String, Object>subproyecto  = new HashMap<>();
-                subproyecto.put("id", documentSnapshot.getId());
-                subproyecto.put("nombre", documentSnapshot.getString("nombre"));
-                subproyecto.put("profesor", documentSnapshot.getString("profesor"));
-
-                subproyectos.add(subproyecto);
-            }   
-    } catch (Exception e) {
-        System.err.println("Error al obtener subproyectos. ordenadas: " + e.getMessage());
-    }
-    return subproyectos;
-}
-
+    
 
     /*
      * public static void main(String[] args) {
