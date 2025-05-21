@@ -1,36 +1,27 @@
 package com.example.apiasistencia.resources;
+
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import com.example.apiasistencia.models.Asistencia;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.*;
+import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
+
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 
 public class FirestoreCRUD {
-    public final Firestore db;
+     public final Firestore db;
 
     public FirestoreCRUD() {
-        // Cargar el archivo de credenciales
-        try {
-            // Ruta del archivo de configuración
-            String path = "serviceAccountKey.json";
-            // Cargar las credenciales desde el archivo
-            GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(path));
-            // Opción 1: Usar InputStream directamente
-            FirestoreOptions options = FirestoreOptions.getDefaultInstance().toBuilder()
-                    .setCredentials(credentials)
-                    .build();
-            // Opción 2: Usar la ruta del archivo de credenciales
-            this.db = options.getService();
-
-            System.out.println("Conexión a Firestore establecida");
-        } catch (Exception e) {
-            System.err.println("Error al conectar con Firestore: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
+        this.db = new FirestoreInitializer().initialize();
     }
 
     // creamos una funcion para crear un nuevo estudiante en Firestore
@@ -143,7 +134,6 @@ public class FirestoreCRUD {
         return nombrecompleto;
     }
 
-
     public static List<Map<String, Object>> leerAsistencias() {
         List<Map<String, Object>> asistencias = new ArrayList<>();
 
@@ -169,18 +159,18 @@ public class FirestoreCRUD {
     }
 
     public static List<Map<String, Object>> leerAsistenciasUnProfesor(String profesor) {
-    List<Map<String, Object>> asistencias = new ArrayList<>();
+        List<Map<String, Object>> asistencias = new ArrayList<>();
 
-    try {
-        FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-        CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
 
-        // Consulta con filtro y ordenamiento
-        Query query = colRef.whereEqualTo("profesor", profesor);
-                          //.orderBy("fecha", Direction.DESCENDING);
+            // Consulta con filtro y ordenamiento
+            Query query = colRef.whereEqualTo("profesor", profesor);
+            // .orderBy("fecha", Direction.DESCENDING);
 
-        ApiFuture<QuerySnapshot> future = query.get();
-        QuerySnapshot querySnapshot = future.get();
+            ApiFuture<QuerySnapshot> future = query.get();
+            QuerySnapshot querySnapshot = future.get();
             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
                 Map<String, Object> asistencia = new HashMap<>();
                 asistencia.put("id", documentSnapshot.getId());
@@ -189,25 +179,26 @@ public class FirestoreCRUD {
                 asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
                 asistencia.put("profesor", documentSnapshot.getString("profesor"));
                 asistencias.add(asistencia);
-            }   
-    } catch (Exception e) {
-        System.err.println("Error al obtener asistencias ordenadas: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println("Error al obtener asistencias ordenadas: " + e.getMessage());
+        }
+        return asistencias;
     }
-    return asistencias;
-}
-public static List<Map<String, Object>> leerAsistenciasUnSubproyecto(String subproyecto) {
-    List<Map<String, Object>> asistencias = new ArrayList<>();
 
-    try {
-        FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-        CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
+    public static List<Map<String, Object>> leerAsistenciasUnSubproyecto(String subproyecto) {
+        List<Map<String, Object>> asistencias = new ArrayList<>();
 
-        // Consulta con filtro y ordenamiento
-        Query query = colRef.whereEqualTo("subproyecto", subproyecto);
-                          //.orderBy("fecha", Direction.DESCENDING);
+        try {
+            FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
 
-        ApiFuture<QuerySnapshot> future = query.get();
-        QuerySnapshot querySnapshot = future.get();
+            // Consulta con filtro y ordenamiento
+            Query query = colRef.whereEqualTo("subproyecto", subproyecto);
+            // .orderBy("fecha", Direction.DESCENDING);
+
+            ApiFuture<QuerySnapshot> future = query.get();
+            QuerySnapshot querySnapshot = future.get();
             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
                 Map<String, Object> asistencia = new HashMap<>();
                 asistencia.put("id", documentSnapshot.getId());
@@ -216,14 +207,14 @@ public static List<Map<String, Object>> leerAsistenciasUnSubproyecto(String subp
                 asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
                 asistencia.put("profesor", documentSnapshot.getString("profesor"));
                 asistencias.add(asistencia);
-            }   
-    } catch (Exception e) {
-        System.err.println("Error al obtener asistencias ordenadas: " + e.getMessage());
+            }
+        } catch (Exception e) {
+            System.err.println("Error al obtener asistencias ordenadas: " + e.getMessage());
+        }
+        return asistencias;
     }
-    return asistencias;
-}
 
-public static Asistencia crearAsistencia(Asistencia asistencia) {
+    public static Asistencia crearAsistencia(Asistencia asistencia) {
         try {
 
             FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
@@ -252,7 +243,6 @@ public static Asistencia crearAsistencia(Asistencia asistencia) {
         }
         return asistencia;
     }
-    
 
     /*
      * public static void main(String[] args) {
