@@ -10,6 +10,7 @@ D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\mo
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\services\SubproyectoService.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\controller\AuthController.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\models\Subproyecto.java
+D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\resources\FirestoreInitializer.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\services\AuthService.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\models\Asistencia.java
 D:\Documents\Proyectos\api-asistencia\src\main\java\com\example\apiasistencia\controller\InfoController.java
