@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.apiasistencia.models.Asistencia;
 import com.example.apiasistencia.resources.FirestoreCRUD;
+import com.example.apiasistencia.services.AsistenciaService;
 
 @RestController
 public class AsistenciasController {
@@ -24,7 +25,7 @@ public class AsistenciasController {
     @PostMapping("/agregarasistencia")
     public ResponseEntity<?> agregarAsistencia(@RequestBody Asistencia asistencia) {
         try {
-            Asistencia asistenciaGuardada = FirestoreCRUD.crearAsistencia(asistencia);
+            Asistencia asistenciaGuardada = AsistenciaService.crearAsistencia(asistencia);
             return ResponseEntity.ok(asistenciaGuardada);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Error al procesar la solicitud: " + e.getMessage());
@@ -33,21 +34,21 @@ public class AsistenciasController {
 
     @GetMapping("/asistencias")
     public List<Map<String, Object>> asistenciasGet() {
-        List<Map<String, Object>> asistencias = FirestoreCRUD.leerAsistencias();
+        List<Map<String, Object>> asistencias = AsistenciaService.leerAsistencias();
 
         return asistencias;
     }
 
     @PostMapping("/asistenciasprofesor")
     public List<Map<String, Object>> asistenciasProfesor(@RequestBody String idProfesor) {
-        List<Map<String, Object>> asistencias = FirestoreCRUD.leerAsistenciasUnProfesor(idProfesor);
+        List<Map<String, Object>> asistencias = AsistenciaService.leerAsistenciasUnProfesor(idProfesor);
 
         return asistencias;
     }
     
     @PostMapping("/asistenciassubproyecto")
     public List<Map<String, Object>> asistenciasSubproyecto(@RequestBody String idSubproyecto) {
-        List<Map<String, Object>> asistencias = FirestoreCRUD.leerAsistenciasUnSubproyecto(idSubproyecto);
+        List<Map<String, Object>> asistencias = AsistenciaService.leerAsistenciasUnSubproyecto(idSubproyecto);
 
         return asistencias;
     }

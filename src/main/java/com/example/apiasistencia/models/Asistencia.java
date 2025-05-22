@@ -8,17 +8,19 @@ public class Asistencia {
         private List<String> estudiantes;
         private String subproyecto;
         private String profesor;
+        private String descripcion;
 
         // Constructor vacío necesario para la deserialización
         public Asistencia() {
         }
 
-        public Asistencia(String id,String fecha, List<String> estudiantes, String subproyecto, String profesor) {
+        public Asistencia(String id,String fecha, List<String> estudiantes, String subproyecto, String profesor, String descripcion) {
             this.id = id;
             this.fecha = fecha;
             this.estudiantes = estudiantes;
             this.subproyecto = subproyecto;
             this.profesor = profesor;
+            this.descripcion = descripcion;
         }
 
         // Getters y Setters
@@ -59,5 +61,11 @@ public class Asistencia {
 
         public void setProfesor(String profesor) {
             this.profesor = profesor;
+        }
+        public String getDescripcion() {
+            return descripcion;
+        }
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
         }
     }

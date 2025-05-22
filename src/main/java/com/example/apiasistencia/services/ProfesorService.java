@@ -56,6 +56,7 @@ public class ProfesorService {
                 profesor.put("telefono", documentSnapshot.getString("telefono"));
                 profesor.put("correo", documentSnapshot.getString("correo"));
                 profesor.put("imagen", documentSnapshot.getString("imagen"));
+                profesor.put("aprobado", documentSnapshot.getBoolean("aprobado"));
                 profesores.add(profesor);
             }
         } catch (Exception e) {
