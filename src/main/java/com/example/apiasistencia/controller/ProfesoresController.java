@@ -20,14 +20,14 @@ public class ProfesoresController {
     // importandola clase creadapor arocha
     FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
 
-    @GetMapping("/profesores")
+    @GetMapping("/leerprofesores")
     public List<Map<String, Object>> profesoresGet() {
 
         List<Map<String, Object>> profesoresEncontrados = FirestoreCRUD.leerProfesores();
 
         return profesoresEncontrados;
     }
-    @PostMapping("/profesor")
+    @PostMapping("/leerprofesor")
     public ResponseEntity<?> buscarProfesor(@RequestBody  String idProfesor ) {
         
 
