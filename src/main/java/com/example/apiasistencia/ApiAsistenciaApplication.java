@@ -22,6 +22,7 @@ public class ApiAsistenciaApplication {
             }
         };
     }
+    
 
     public static void main(String[] args) {
         SpringApplication.run(ApiAsistenciaApplication.class, args);
