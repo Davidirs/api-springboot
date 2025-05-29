@@ -26,11 +26,13 @@ public class SubproyectosController {
     }
     
     @GetMapping("/subproyectos")
-    public List<Map<String, Object>> subproyectosGet() {
+    public List<Map<String, Object>> subproyectos() {
+
         List<Map<String, Object>> subproyectos = SubproyectoService.leerSubproyectos();
+
         return subproyectos;
     }
-
+boolean esJoven;
     @PostMapping("/listasubproyectosprofesor")
     public List<Map<String, Object>> listasubproyectosProfesor(@RequestBody String idProfesor) {
         List<Map<String, Object>> subproyectos = SubproyectoService.leerSubproyectosUnProfesor(idProfesor);

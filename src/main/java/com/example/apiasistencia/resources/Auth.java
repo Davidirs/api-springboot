@@ -1,6 +1,4 @@
 package com.example.apiasistencia.resources;
-
-import com.example.apiasistencia.services.AuthService;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;

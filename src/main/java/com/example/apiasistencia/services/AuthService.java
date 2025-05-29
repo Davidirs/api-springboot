@@ -1,11 +1,8 @@
 package com.example.apiasistencia.services;
 
 import java.io.IOException;
-import java.util.Map;
-
 import com.example.apiasistencia.models.Credenciales;
 import com.example.apiasistencia.models.Profesor;
-import com.example.apiasistencia.resources.Auth;
 import com.example.apiasistencia.resources.Auth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
