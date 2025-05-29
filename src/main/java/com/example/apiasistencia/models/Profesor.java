@@ -9,6 +9,7 @@ public class Profesor {
         private String imagen;
         private String telefono;
         private String aprobado;
+        private String aprobado;
 
         // Constructor vacío necesario para la deserialización
         public Profesor() {
@@ -21,6 +22,7 @@ public class Profesor {
             this.correo = correo;
             this.imagen = imagen;
             this.telefono = telefono;
+            this.aprobado = aprobado;
             this.aprobado = aprobado;
         }
 

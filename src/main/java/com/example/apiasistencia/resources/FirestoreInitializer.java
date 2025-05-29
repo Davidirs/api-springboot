@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
+
 
 public class FirestoreInitializer {
     private static final String[] REQUIRED_ENV_VARS = {
@@ -23,7 +23,7 @@ public class FirestoreInitializer {
     };
 
     private static final String ENV_FILE_PATH = ".env"; // o "./config/.env" si está en esa ubicación
-    boolean isProd = true; // Cambiar a true si es producción
+    boolean isProd = false; // Cambiar a true si es producción
 
     public Firestore initialize() {
         String credentialsJson;

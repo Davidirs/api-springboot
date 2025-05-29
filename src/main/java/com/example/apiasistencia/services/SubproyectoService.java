@@ -42,9 +42,9 @@ public class SubproyectoService {
 
     public static List<Map<String, Object>> leerSubproyectos() {
         List<Map<String, Object>> subproyectos = new ArrayList<>();
-
         try {
             FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
+            System.out.println("subproyectos");
             CollectionReference colRef = firestoreCRUD.db.collection("subproyectos");
 
             ApiFuture<QuerySnapshot> future = colRef.get();
@@ -56,6 +56,7 @@ public class SubproyectoService {
                 subproyecto.put("profesor", documentSnapshot.getString("profesor"));
                 subproyectos.add(subproyecto);
             }
+            
         } catch (Exception e) {
             System.err.println("Error al obtener las subproyectos: " + e.getMessage());
         }
