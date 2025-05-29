@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.apiasistencia.models.Asistencia;
+import com.example.apiasistencia.models.Profesor;
+import com.example.apiasistencia.models.Subproyecto;
 import com.example.apiasistencia.resources.FirestoreCRUD;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
@@ -41,7 +43,7 @@ public class AsistenciaService {
         return asistencias;
     }
 
-    public static List<Map<String, Object>> leerAsistenciasUnProfesor(String profesor) {
+    public static List<Map<String, Object>> leerAsistenciasUnProfesor(Profesor profesor) {
         List<Map<String, Object>> asistencias = new ArrayList<>();
 
         try {
@@ -49,7 +51,9 @@ public class AsistenciaService {
             CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
 
             // Consulta con filtro y ordenamiento
-            Query query = colRef.whereEqualTo("profesor", profesor);
+            Query query = colRef.whereEqualTo("profesor", profesor.getId ())
+                    // .orderBy("fecha", Direction.DESCENDING);
+                    ;
             // .orderBy("fecha", Direction.DESCENDING);
 
             ApiFuture<QuerySnapshot> future = query.get();
@@ -69,7 +73,7 @@ public class AsistenciaService {
         return asistencias;
     }
 
-    public static List<Map<String, Object>> leerAsistenciasUnSubproyecto(String subproyecto) {
+    public static List<Map<String, Object>> leerAsistenciasUnSubproyecto(Subproyecto subproyecto) {
         List<Map<String, Object>> asistencias = new ArrayList<>();
 
         try {
@@ -77,7 +81,9 @@ public class AsistenciaService {
             CollectionReference colRef = firestoreCRUD.db.collection("asistencias");
 
             // Consulta con filtro y ordenamiento
-            Query query = colRef.whereEqualTo("subproyecto", subproyecto);
+            Query query = colRef.whereEqualTo("subproyecto", subproyecto.getId())
+                    // .orderBy("fecha", Direction.DESCENDING);
+                    ;
             // .orderBy("fecha", Direction.DESCENDING);
 
             ApiFuture<QuerySnapshot> future = query.get();

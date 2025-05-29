@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.apiasistencia.models.Profesor;
 import com.example.apiasistencia.models.Subproyecto;
 import com.example.apiasistencia.resources.FirestoreCRUD;
 import com.google.api.core.ApiFuture;
@@ -61,7 +62,7 @@ public class SubproyectoService {
         return subproyectos;
     }
 
-    public static List<Map<String, Object>> leerSubproyectosUnProfesor(String profesor) {
+    public static List<Map<String, Object>> leerSubproyectosUnProfesor(Profesor profesor) {
         List<Map<String, Object>> subproyectos = new ArrayList<>();
 
         try {
@@ -69,7 +70,7 @@ public class SubproyectoService {
             CollectionReference colRef = firestoreCRUD.db.collection("subproyectos");
 
             // Consulta con filtro y ordenamiento
-            Query query = colRef.whereEqualTo("profesor", profesor);
+            Query query = colRef.whereEqualTo("profesor", profesor.getId());
             // .orderBy("fecha", Direction.DESCENDING);
 
             ApiFuture<QuerySnapshot> future = query.get();

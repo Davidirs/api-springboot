@@ -3,23 +3,25 @@ package com.example.apiasistencia.models;
 
 public class Profesor {
         private String id;
+        private String ci;
         private String nombre;
         private String correo;
         private String imagen;
         private String telefono;
-        private boolean isAprobado;
+        private String aprobado;
 
         // Constructor vacío necesario para la deserialización
         public Profesor() {
         }
 
-        public Profesor(String id,String nombre, String correo, String imagen, String telefono, boolean isAprobado) {
+        public Profesor(String id,String ci,String nombre, String correo, String imagen, String telefono, String aprobado) {
             this.id = id;
+            this.ci = ci;
             this.nombre = nombre;
             this.correo = correo;
             this.imagen = imagen;
             this.telefono = telefono;
-            this.isAprobado = isAprobado;
+            this.aprobado = aprobado;
         }
 
         // Getters y Setters
@@ -29,6 +31,14 @@ public class Profesor {
 
         public void setId(String id) {
             this.id = id;
+        }
+        public String getCi() {
+            return ci;
+        }
+
+
+        public void setCi(String ci) {
+            this.ci = ci;
         }
         public String getNombre() {
             return nombre;
@@ -61,7 +71,10 @@ public class Profesor {
         public void setTelefono(String telefono) {
             this.telefono = telefono;
         }
-        public boolean isAprobado() {
-            return isAprobado;
+        public String getAprobado() {
+            return aprobado;
+        }
+        public void setAprobado(String aprobado) {
+            this.aprobado = aprobado;
         }
     }

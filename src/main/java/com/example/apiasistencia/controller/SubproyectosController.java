@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.apiasistencia.models.Profesor;
 import com.example.apiasistencia.models.Subproyecto;
 import com.example.apiasistencia.services.SubproyectoService;
 
@@ -32,8 +33,8 @@ public class SubproyectosController {
     }
 
     @PostMapping("/listasubproyectosprofesor")
-    public List<Map<String, Object>> listasubproyectosProfesor(@RequestBody String idProfesor) {
-        List<Map<String, Object>> subproyectos = SubproyectoService.leerSubproyectosUnProfesor(idProfesor);
+    public List<Map<String, Object>> listasubproyectosProfesor(@RequestBody Profesor profesor) {
+        List<Map<String, Object>> subproyectos = SubproyectoService.leerSubproyectosUnProfesor(profesor);
         return subproyectos;
     }
 

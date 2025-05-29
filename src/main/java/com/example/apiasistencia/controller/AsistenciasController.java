@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.apiasistencia.models.Asistencia;
+import com.example.apiasistencia.models.Profesor;
+import com.example.apiasistencia.models.Subproyecto;
 import com.example.apiasistencia.resources.FirestoreCRUD;
 import com.example.apiasistencia.services.AsistenciaService;
 
@@ -40,15 +42,15 @@ public class AsistenciasController {
     }
 
     @PostMapping("/asistenciasprofesor")
-    public List<Map<String, Object>> asistenciasProfesor(@RequestBody String idProfesor) {
-        List<Map<String, Object>> asistencias = AsistenciaService.leerAsistenciasUnProfesor(idProfesor);
+    public List<Map<String, Object>> asistenciasProfesor(@RequestBody Profesor profesor) {
+        List<Map<String, Object>> asistencias = AsistenciaService.leerAsistenciasUnProfesor(profesor);
 
         return asistencias;
     }
     
     @PostMapping("/asistenciassubproyecto")
-    public List<Map<String, Object>> asistenciasSubproyecto(@RequestBody String idSubproyecto) {
-        List<Map<String, Object>> asistencias = AsistenciaService.leerAsistenciasUnSubproyecto(idSubproyecto);
+    public List<Map<String, Object>> asistenciasSubproyecto(@RequestBody Subproyecto subproyecto) {
+        List<Map<String, Object>> asistencias = AsistenciaService.leerAsistenciasUnSubproyecto(subproyecto);
 
         return asistencias;
     }

@@ -56,7 +56,7 @@ public class ProfesorService {
                 profesor.put("telefono", documentSnapshot.getString("telefono"));
                 profesor.put("correo", documentSnapshot.getString("correo"));
                 profesor.put("imagen", documentSnapshot.getString("imagen"));
-                profesor.put("aprobado", documentSnapshot.getBoolean("aprobado"));
+                profesor.put("aprobado", documentSnapshot.getString("aprobado"));
                 profesores.add(profesor);
             }
         } catch (Exception e) {
@@ -77,6 +77,8 @@ public class ProfesorService {
             profesor.put("telefono", documentSnapshot.getString("telefono"));
             profesor.put("correo", documentSnapshot.getString("correo"));
             profesor.put("imagen", documentSnapshot.getString("imagen"));
+            profesor.put("aprobado", documentSnapshot.getString("aprobado"));
+
 
         } catch (Exception e) {
             System.err.println("Error al obtener el profesor: " + e.getMessage());
