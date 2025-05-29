@@ -23,7 +23,8 @@ public class FirestoreInitializer {
     };
 
     private static final String ENV_FILE_PATH = ".env"; // o "./config/.env" si está en esa ubicación
-    boolean isProd = true; // Cambiar a true si es producción
+    boolean isProd = true;
+     // Cambiar a true si es producción
 
     public Firestore initialize() {
         String credentialsJson;
