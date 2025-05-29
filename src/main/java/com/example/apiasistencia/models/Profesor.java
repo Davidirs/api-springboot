@@ -9,7 +9,6 @@ public class Profesor {
         private String imagen;
         private String telefono;
         private String aprobado;
-        private String aprobado;
 
         // Constructor vacío necesario para la deserialización
         public Profesor() {
