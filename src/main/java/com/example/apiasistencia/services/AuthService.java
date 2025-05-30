@@ -44,6 +44,7 @@ public class AuthService {
 
             // 2. Verificar token en backend
             FirebaseToken decodedToken = auth.verifyLogin(token);
+            System.out.println("Token verificado: " + decodedToken.getUid());
 
         } catch (FirebaseAuthException e) {
             System.err.println("Error de autenticación: " + e.getMessage());

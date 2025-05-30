@@ -13,6 +13,14 @@ import com.example.apiasistencia.services.EstudianteService;
 
 @RestController
 public class EstudiantesController {
+    @PostMapping("/crearestudiante")
+    public ResponseEntity<?> crearEstudiante(@RequestBody  Estudiante estudiante ) {
+        Estudiante estudiantecreado = EstudianteService.crearEstudiante(estudiante);
+        if (estudiantecreado == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(estudiantecreado);
+    }
 
     @GetMapping("/estudiantes")
     public List<Estudiante> estudiantesGet() {

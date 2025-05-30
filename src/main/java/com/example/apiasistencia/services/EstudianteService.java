@@ -1,47 +1,28 @@
 package com.example.apiasistencia.services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.example.apiasistencia.resources.FirestoreCRUD;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
 import com.example.apiasistencia.models.Estudiante;
 
 public class EstudianteService {
     // creamos una funcion para crear un nuevo estudiante en Firestore
-    public static void crearEstudiante() {
+    public static Estudiante crearEstudiante(Estudiante estudiante) {
         try {
-
             FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
-
-            // Crear una referencia al documento
-            DocumentReference docRef = firestoreCRUD.db
-                    .collection("estudiantes")
-                    .document("30740994");
-
-            // Crear un mapa con los datos del estudiante
-            Map<String, Object> estudiante = new HashMap<>();
-
-            // Agregar los datos del estudiante
-            estudiante.put("apellido", "guevara");
-            estudiante.put("nombre", "anthony");
-            estudiante.put("edad", "20");
-            // Guardar el documento en Firestore
-            ApiFuture<WriteResult> result = docRef.set(estudiante);
-
-            System.out.println("Documento guardado con ID: " + result.get().getUpdateTime());
+            CollectionReference colRef = firestoreCRUD.db.collection("estudiantes");
+            // crear el Estudiante en Firestore
+            colRef.add(estudiante);
         } catch (Exception e) {
-            // TODO: handle exception
-            System.err.println("Error al guardar el documento: " + e.getMessage());
+            System.err.println("Error al crear Estudiante: " + e.getMessage());
         }
+        return estudiante;
     }
 
 
@@ -60,7 +41,6 @@ public class EstudianteService {
         List<Estudiante> estudiantes = new ArrayList<>();
         for (QueryDocumentSnapshot document : querySnapshot.getDocuments()) {
             Estudiante estudiante = document.toObject(Estudiante.class);
-            estudiante.setcedula(document.getId()); // Asignar el ID del documento como cédula
             estudiantes.add(estudiante);
         }
         
@@ -90,7 +70,7 @@ public static List<Estudiante> buscarEstudiantesPorCedulasParallel(List<String> 
             }
         })
         .collect(Collectors.toList());
-}
+}/* 
     public static void EliminarEstudiante() {
 
         try {
@@ -152,7 +132,7 @@ public static List<Estudiante> buscarEstudiantesPorCedulasParallel(List<String> 
         // devuelvo la nombrecompleto para poder usarla en el controlador
         return nombrecompleto;
     }
-
+ */
 // Método auxiliar para dividir listas
 private static <T> List<List<T>> dividirLista(List<T> listaOriginal, int tamañoLote) {
     List<List<T>> listasDivididas = new ArrayList<>();

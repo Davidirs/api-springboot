@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.apiasistencia.models.Asistencia;
 import com.example.apiasistencia.models.Profesor;
 import com.example.apiasistencia.models.Subproyecto;
-import com.example.apiasistencia.resources.FirestoreCRUD;
 import com.example.apiasistencia.services.AsistenciaService;
 
 @RestController

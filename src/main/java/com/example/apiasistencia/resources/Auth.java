@@ -108,7 +108,7 @@ public FirebaseToken verifyLogin(String idToken) throws FirebaseAuthException {
 
         try {
             OidcProviderConfig googleConfig = auth.createOidcProviderConfig(googleRequest);
-            System.out.println("Proveedor Google configurado");
+            System.out.println("Proveedor Google configurado" + googleConfig.getProviderId());
         } catch (FirebaseAuthException e) {
             System.out.println("Error al configurar Google: " + e.getMessage());
         }
