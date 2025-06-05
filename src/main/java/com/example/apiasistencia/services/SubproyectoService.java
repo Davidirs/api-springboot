@@ -54,6 +54,7 @@ public class SubproyectoService {
                 subproyecto.put("id", documentSnapshot.getId());
                 subproyecto.put("nombre", documentSnapshot.getString("nombre"));
                 subproyecto.put("profesor", documentSnapshot.getString("profesor"));
+                subproyecto.put("carrera", documentSnapshot.getString("carrera"));
                 subproyectos.add(subproyecto);
             }
             
@@ -82,6 +83,7 @@ public class SubproyectoService {
                 subproyecto.put("id", documentSnapshot.getId());
                 subproyecto.put("nombre", documentSnapshot.getString("nombre"));
                 subproyecto.put("profesor", documentSnapshot.getString("profesor"));
+                subproyecto.put("carrera", documentSnapshot.getString("carrera"));
 
                 subproyectos.add(subproyecto);
             }
