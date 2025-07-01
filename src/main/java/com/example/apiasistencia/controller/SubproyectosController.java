@@ -33,7 +33,7 @@ public class SubproyectosController {
 
         return subproyectos;
     }
-boolean esJoven;
+    
     @PostMapping("/listasubproyectosprofesor")
     public List<Map<String, Object>> listasubproyectosProfesor(@RequestBody Profesor profesor) {
         List<Map<String, Object>> subproyectos = SubproyectoService.leerSubproyectosUnProfesor(profesor);

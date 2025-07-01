@@ -5,6 +5,7 @@ com\example\apiasistencia\controller\EstudiantesController.class
 com\example\apiasistencia\models\Carrera.class
 com\example\apiasistencia\models\Estudiante.class
 com\example\apiasistencia\resources\MissingEnvironmentVariableException.class
+com\example\apiasistencia\models\Justificativo.class
 com\example\apiasistencia\controller\AuthController.class
 com\example\apiasistencia\ApiAsistenciaApplication.class
 com\example\apiasistencia\ApiAsistenciaApplication$1.class
@@ -16,12 +17,14 @@ com\example\apiasistencia\services\AsistenciaService.class
 com\example\apiasistencia\resources\FirestoreInitializationException.class
 com\example\apiasistencia\controller\AsistenciasController$ErrorResponse.class
 com\example\apiasistencia\services\CarrerasService.class
+com\example\apiasistencia\services\JustificativoService.class
 com\example\apiasistencia\models\Asistencia.class
 com\example\apiasistencia\services\EstudianteService.class
 com\example\apiasistencia\models\Profesor.class
 com\example\apiasistencia\controller\AsistenciasController.class
 com\example\apiasistencia\services\AuthService.class
 com\example\apiasistencia\resources\Auth.class
+com\example\apiasistencia\controller\JustificativosController.class
 com\example\apiasistencia\controller\InfoController.class
 com\example\apiasistencia\controller\SubproyectosController.class
 com\example\apiasistencia\resources\FirestoreCRUD.class

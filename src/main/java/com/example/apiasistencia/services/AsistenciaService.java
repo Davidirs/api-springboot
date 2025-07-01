@@ -35,6 +35,8 @@ public class AsistenciaService {
                 asistencia.put("estudiantes", (List<String>) documentSnapshot.get("estudiantes"));
                 asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
                 asistencia.put("profesor", documentSnapshot.getString("profesor"));
+                asistencia.put("descripcion", documentSnapshot.getString("descripcion"));
+                asistencia.put("imageUrl", documentSnapshot.getString("imageUrl"));
                 asistencias.add(asistencia);
             }
         } catch (Exception e) {
@@ -65,6 +67,8 @@ public class AsistenciaService {
                 asistencia.put("estudiantes", (List<String>) documentSnapshot.get("estudiantes"));
                 asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
                 asistencia.put("profesor", documentSnapshot.getString("profesor"));
+                asistencia.put("descripcion", documentSnapshot.getString("descripcion"));
+                asistencia.put("imageUrl", documentSnapshot.getString("imageUrl"));
                 asistencias.add(asistencia);
             }
         } catch (Exception e) {
@@ -96,6 +100,7 @@ public class AsistenciaService {
                 asistencia.put("subproyecto", documentSnapshot.getString("subproyecto"));
                 asistencia.put("profesor", documentSnapshot.getString("profesor"));
                 asistencia.put("descripcion", documentSnapshot.getString("descripcion"));
+                asistencia.put("imageUrl", documentSnapshot.getString("imageUrl"));
                 asistencias.add(asistencia);
             }
         } catch (Exception e) {
@@ -131,6 +136,7 @@ public class AsistenciaService {
             nuevaAsistencia.put("profesor", asistencia.getProfesor());
             nuevaAsistencia.put("estudiantes", asistencia.getEstudiantes());
             nuevaAsistencia.put("descripcion", asistencia.getDescripcion());
+            nuevaAsistencia.put("imageUrl", asistencia.getImageUrl());
             // Guardar el documento en Firestore
             ApiFuture<WriteResult> result = docRef.set(nuevaAsistencia);
 
