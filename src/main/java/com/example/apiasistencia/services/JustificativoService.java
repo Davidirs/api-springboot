@@ -46,10 +46,13 @@ public class JustificativoService {
             FirestoreCRUD firestoreCRUD = new FirestoreCRUD();
             System.out.println("justificativos");
             CollectionReference colRef = firestoreCRUD.db.collection("justificativos");
-
+            
             ApiFuture<QuerySnapshot> future = colRef.get();
             QuerySnapshot querySnapshot = future.get();
+            System.out.println("justificativos");
             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                System.out.println(documentSnapshot);
+
                 Map<String, Object> justificativo = new HashMap<>();
                 justificativo.put("id", documentSnapshot.getId());
                 justificativo.put("descripcion", documentSnapshot.getString("descripcion"));
