@@ -6,16 +6,18 @@ public class Justificativo {
         private String descripcion;
         private String profesor;
         private String fecha;
+        private String imageUrl;
 
         // Constructor vacío necesario para la deserialización
         public Justificativo() {
         }
 
-        public Justificativo(String id,String descripcion, String profesor,String fecha ) {
+        public Justificativo(String id,String descripcion, String profesor,String fecha, String imageUrl) {
             this.id = id;
             this.descripcion = descripcion;
             this.profesor = profesor;
             this.fecha = fecha;
+            this.imageUrl = imageUrl;
         }
 
         // Getters y Setters
@@ -45,5 +47,11 @@ public class Justificativo {
         }
         public void setFecha(String fecha) {
             this.fecha = fecha;
+        }
+        public String getImageUrl() {
+            return imageUrl;
+        }
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
     }

@@ -55,6 +55,7 @@ public class JustificativoService {
                 justificativo.put("descripcion", documentSnapshot.getString("descripcion"));
                 justificativo.put("profesor", documentSnapshot.getString("profesor"));
                 justificativo.put("fecha", documentSnapshot.getString("fecha"));
+                justificativo.put("imageUrl", documentSnapshot.getString("imageUrl"));
                 justificativos.add(justificativo);
             }
             
@@ -84,6 +85,7 @@ public class JustificativoService {
                 justificativo.put("descripcion", documentSnapshot.getString("descripcion"));
                 justificativo.put("profesor", documentSnapshot.getString("profesor"));
                 justificativo.put("fecha", documentSnapshot.getString("fecha"));
+                justificativo.put("imageUrl", documentSnapshot.getString("imageUrl"));
 
                 justificativos.add(justificativo);
             }
